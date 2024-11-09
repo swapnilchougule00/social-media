@@ -5,6 +5,7 @@ import {
   collection,
   doc,
   getDoc,
+  serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
@@ -23,8 +24,10 @@ export async function createUserInFirebase(user: UserResource) {
       email: user.emailAddresses[0].emailAddress,
       followers: [],
       following: [],
+      profileImg: user.imageUrl,
       posts: [],
       mentioned: [],
+      timeStamp: serverTimestamp(),
     };
     await setDoc(userRef, userData);
     return userData;
@@ -45,6 +48,7 @@ export async function createPostInFirebase(
     createdAt: new Date(),
     mentions: [],
     likes: [],
+    timeStamp: serverTimestamp(),
   });
 
   await updateDoc(userRef, {

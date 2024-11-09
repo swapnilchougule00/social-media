@@ -20,7 +20,11 @@ const SuggestionUserCard = ({ user }) => {
     <li key={user.id} className="flex items-center justify-between">
       <div className="flex items-center space-x-3">
         <Avatar>
-          <AvatarImage src={user.avatar} alt={user.name} />
+          <AvatarImage
+            className="w-10 h-10 object-cover rounded-full"
+            src={user.profileImg}
+            alt={user.name}
+          />
           <AvatarFallback className="bg-purple-500 p-2 rounded-full px-3 text-white">
             {user.name.charAt(0)}
           </AvatarFallback>
