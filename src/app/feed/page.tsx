@@ -1,4 +1,3 @@
-"use client";
 // import useAppStore from "@/store/useAppStore";
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,6 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -24,6 +22,7 @@ import {
 } from "lucide-react";
 import UserCard from "@/components/UserCard";
 import SuggestionsBox from "@/components/suggestionUsers/SuggestionsBox";
+import AddNewPost from "@/components/AddNewPost";
 
 const posts = [
   {
@@ -46,7 +45,7 @@ const posts = [
   },
 ];
 
-const page = () => {
+const Feed = () => {
   // const { userData } = useAppStore();
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-900 dark:to-gray-800">
@@ -57,20 +56,8 @@ const page = () => {
 
         {/* Middle - Posts feed */}
         <section className="md:col-span-3 space-y-6">
-          {/* New post input */}
-          <Card className="bg-white dark:bg-gray-800 shadow-md">
-            <CardContent className="pt-6">
-              <form onSubmit={(e) => e.preventDefault()}>
-                <Input
-                  placeholder="What's on your mind?"
-                  className="mb-4 bg-gray-100 dark:bg-gray-700 border-0 focus-visible:ring-2 focus-visible:ring-purple-500"
-                />
-                <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white">
-                  Post
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
+          {/* New post*/}
+          <AddNewPost />
 
           {/* Posts */}
           <ScrollArea className="h-[calc(100vh-16rem)]">
@@ -182,4 +169,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Feed;

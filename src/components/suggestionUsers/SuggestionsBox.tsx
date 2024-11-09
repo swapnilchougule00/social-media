@@ -1,11 +1,11 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import useAppStore from "@/store/useAppStore";
 import SuggestionUserCard from "./SuggestionUserCard";
 const SuggestionsBox = () => {
-  const { fetchUsers, users, setUsers } = useAppStore();
+  const { fetchUsers, users, setUsers, userData } = useAppStore();
 
   useEffect(() => {
     const getUsers = async () => {
@@ -15,7 +15,10 @@ const SuggestionsBox = () => {
     getUsers();
   }, []);
 
-  
+  const usersNotFollowed = useMemo(() => {
+    if (!userData?.name) return [];
+    return users.filter((user) => !userData.following.includes(user.id));
+  }, [users, userData]);
 
   return (
     <aside className="hidden md:block md:col-span-2">
@@ -27,9 +30,13 @@ const SuggestionsBox = () => {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {users.map((user) => (
-              <SuggestionUserCard key={user.id} user={user} />
-            ))}
+            {userData.name &&
+              usersNotFollowed.map((user) => (
+                <SuggestionUserCard key={user.id} user={user} />
+              ))}
+            {usersNotFollowed.length < 1 && (
+              <h3 className="text-center font-bold">No Users</h3>
+            )}
           </ul>
         </CardContent>
       </Card>
