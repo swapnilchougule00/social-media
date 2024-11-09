@@ -1,24 +1,9 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./global.css";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+import "./globals.css";
+import { ClerkProvider, SignedIn } from "@clerk/nextjs";
+import AuthRedirect from "@/components/auth/AuthRedirect";
+import UserSetup from "@/components/auth/UserSetup";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -33,12 +18,11 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          <SignedOut>
-            <SignInButton />
-          </SignedOut>
+        <body>
           <SignedIn>
-            <UserButton />
+            <AuthRedirect />
+            <UserSetup />
+            <Header />
           </SignedIn>
           {children}
         </body>
