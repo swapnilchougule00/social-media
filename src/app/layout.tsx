@@ -4,6 +4,7 @@ import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import AuthRedirect from "@/components/auth/AuthRedirect";
 import UserSetup from "@/components/auth/UserSetup";
 import Header from "@/components/Header";
+import UserSetupWrapper from "@/components/auth/UserSetupWrapper";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,7 +22,7 @@ export default function RootLayout({
         <body>
           <SignedIn>
             <AuthRedirect />
-            <UserSetup />
+            <UserSetupWrapper />
             <Header />
           </SignedIn>
           {children}

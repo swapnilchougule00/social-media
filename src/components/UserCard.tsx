@@ -18,7 +18,7 @@ const UserCard = () => {
         <CardContent>
           <div className="flex items-center space-x-4">
             <Avatar className="w-16 h-16">
-              <AvatarImage src={userData.profileImg} alt={userData.name} />
+              <AvatarImage className="object-cover" src={userData.profileImg} alt={userData.name} />
               <AvatarFallback className="bg-purple-500 text-white text-xl">
                 {userData.name.charAt(0)}
               </AvatarFallback>
