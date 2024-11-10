@@ -5,25 +5,26 @@ import {
   collection,
   doc,
   getDoc,
+  getDocs,
   serverTimestamp,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
-import { UserResource } from "@clerk/types";
+import { Post, User } from "@/types/types";
 
-export async function createUserInFirebase(user: UserResource) {
+export async function createUserInFirebase(user: User) {
   const userRef = doc(db, "users", user.id);
   const userSnap = await getDoc(userRef);
 
   if (!userSnap.exists()) {
     const userData = {
-      name: user.fullName,
+      name: user?.name,
       id: user.id,
-      email: user.emailAddresses[0].emailAddress,
+      email: user.email,
       followers: [],
       following: [],
-      profileImg: user.imageUrl,
+      profileImg: user.profileImg,
       posts: [],
       mentioned: [],
       timeStamp: serverTimestamp(),
@@ -35,29 +36,45 @@ export async function createUserInFirebase(user: UserResource) {
 }
 
 export async function createPostInFirebase(
-  user: UserResource,
-  content: unknown
-) {
-  const userRef = doc(db, "users", user.id);
+  user: User,
+  content: string,
+  mentioned: string[] = []
+): Promise<Post[]> {
   const postsCollection = collection(db, "posts");
+  const userId = user.id;
   const postRef = await addDoc(postsCollection, {
     userId: user.id,
-    userName: user.fullName,
+    userName: user.name,
+    userImg: user.profileImg,
     content,
     createdAt: new Date(),
     mentions: [],
     likes: [],
-    timeStamp: serverTimestamp(),
+    comments: [],
   });
 
-  await updateDoc(userRef, {
-    posts: [postRef.id],
+  const postId = postRef.id;
+  const currentUserRef = doc(db, "users", userId);
+
+  await updateDoc(currentUserRef, {
+    posts: arrayUnion(postId),
   });
 
-  return postRef.id;
+  for (const mentionedUserId of mentioned) {
+    const userDocRef = doc(db, "users", mentionedUserId);
+    await updateDoc(userDocRef, {
+      mentioned: arrayUnion(postId),
+    });
+  }
+  const postSnapshots = await getDocs(postsCollection);
+  const posts: Post[] = postSnapshots.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Post[];
+  return posts;
 }
 
-export async function followUser(currentUserId, targetUserId) {
+export async function followUser(currentUserId: string, targetUserId: string) {
   const currentUserRef = doc(db, "users", currentUserId);
   const targetUserRef = doc(db, "users", targetUserId);
 
@@ -73,7 +90,10 @@ export async function followUser(currentUserId, targetUserId) {
   return userData;
 }
 
-export async function unfollowUser(currentUserId, targetUserId) {
+export async function unfollowUser(
+  currentUserId: string,
+  targetUserId: string
+) {
   const currentUserRef = doc(db, "users", currentUserId);
   const targetUserRef = doc(db, "users", targetUserId);
 

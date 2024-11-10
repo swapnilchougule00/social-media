@@ -30,7 +30,7 @@ const SuggestionsBox = () => {
         </CardHeader>
         <CardContent>
           <ul className="space-y-4">
-            {userData.name &&
+            {userData?.name &&
               usersNotFollowed.map((user) => (
                 <SuggestionUserCard key={user.id} user={user} />
               ))}

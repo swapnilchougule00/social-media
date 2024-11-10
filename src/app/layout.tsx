@@ -4,6 +4,7 @@ import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import AuthRedirect from "@/components/auth/AuthRedirect";
 import Header from "@/components/Header";
 import UserSetupWrapper from "@/components/auth/UserSetupWrapper";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,6 +26,7 @@ export default function RootLayout({
             <Header />
           </SignedIn>
           {children}
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

@@ -1,51 +1,36 @@
+// store/useAppStore.ts
+import { create } from "zustand";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
-import { create } from "zustand";
-import { Post, User } from "@/types/types";
-
-interface AppState {
-  users: User[];
-  posts: Post[];
-  userData: User | object;
-  setUserData: (userData: User) => void;
-  setUsers: (users: User[]) => void;
-  setPosts: (posts: Post[]) => void;
-}
+import { AppState, User, Post } from "@/types/types";
 
 const useAppStore = create<AppState>((set) => ({
   users: [],
   posts: [],
-  userData: {},
-  setUserData: (userData) => set({ userData }),
-  setUsers: (users) => set({ users }),
-  setPosts: (posts) => set({ posts }),
+  userData: null,
+  setUserData: (userData: User | null) => set({ userData }),
+  setUsers: (users: User[]) => set({ users }),
+  setPosts: (posts: Post[]) => set({ posts }),
 
-  fetchUsers: async () => {
+  fetchUsers: async (): Promise<User[]> => {
     const usersCollection = collection(db, "users");
     const userSnapshots = await getDocs(usersCollection);
-    const users = userSnapshots.docs.map((doc) => ({
+    const users: User[] = userSnapshots.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    })) as User[];
     return users;
   },
 
-  fetchPosts: async () => {
+  fetchPosts: async (): Promise<Post[]> => {
     const postsCollection = collection(db, "posts");
     const postSnapshots = await getDocs(postsCollection);
-    const posts = postSnapshots.docs.map((doc) => ({
+    const posts: Post[] = postSnapshots.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    })) as Post[];
     return posts;
   },
-
-  //   addPost: async (userId, content) => {
-  //     const postId = await createPostInFirebase(userId, content);
-  //     set((state) => ({
-  //       posts: [...state.posts, { id: postId, userId, content }],
-  //     }));
-  //   },
 }));
 
 export default useAppStore;

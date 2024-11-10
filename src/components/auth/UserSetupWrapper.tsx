@@ -1,11 +1,12 @@
 import { currentUser } from "@clerk/nextjs/server";
 import UserSetup from "./UserSetup";
+import { User } from "@/types/types";
 
 const UserSetupWrapper = async () => {
   const user = await currentUser();
-  const userData = user
+  const userData: User | null = user
     ? {
-        name: user.fullName,
+        name: user.fullName || "",
         id: user.id,
         email: user.emailAddresses[0].emailAddress,
         followers: [],
@@ -13,6 +14,7 @@ const UserSetupWrapper = async () => {
         profileImg: user.imageUrl,
         posts: [],
         mentioned: [],
+        timeStamp: "",
       }
     : null;
   return <UserSetup user={userData} />;

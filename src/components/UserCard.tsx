@@ -3,10 +3,9 @@ import React from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import useAppStore from "@/store/useAppStore";
-import { User } from "@/types/types";
 const UserCard = () => {
-  const { userData }: User = useAppStore();
-  if (!userData.name) return null;
+  const { userData } = useAppStore();
+  if (!userData?.name) return null;
   return (
     <aside className="hidden md:block md:col-span-2">
       <Card className="sticky top-24 bg-white ">
@@ -18,7 +17,11 @@ const UserCard = () => {
         <CardContent>
           <div className="flex items-center space-x-4">
             <Avatar className="w-16 h-16">
-              <AvatarImage className="object-cover" src={userData.profileImg} alt={userData.name} />
+              <AvatarImage
+                className="object-cover"
+                src={userData.profileImg}
+                alt={userData.name}
+              />
               <AvatarFallback className="bg-purple-500 text-white text-xl">
                 {userData.name.charAt(0)}
               </AvatarFallback>
