@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import { UserResource } from "@clerk/types";
-import useAppStore from "@/store/useAppStore";
 
 export async function createUserInFirebase(user: UserResource) {
   const userRef = doc(db, "users", user.id);

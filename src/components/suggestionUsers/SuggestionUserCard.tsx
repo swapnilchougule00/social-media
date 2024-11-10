@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { useUser } from "@clerk/nextjs";
 import { followUser } from "@/utils/firebaseUtils";
 import useAppStore from "@/store/useAppStore";
-import { User } from "@/types/types";
 
 const SuggestionUserCard = ({ user }) => {
   const { user: currentUser } = useUser();

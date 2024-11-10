@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider, SignedIn } from "@clerk/nextjs";
 import AuthRedirect from "@/components/auth/AuthRedirect";
-import UserSetup from "@/components/auth/UserSetup";
 import Header from "@/components/Header";
 import UserSetupWrapper from "@/components/auth/UserSetupWrapper";
 

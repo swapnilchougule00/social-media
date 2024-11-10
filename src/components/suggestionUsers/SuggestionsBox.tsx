@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import useAppStore from "@/store/useAppStore";
 import SuggestionUserCard from "./SuggestionUserCard";
