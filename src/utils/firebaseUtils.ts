@@ -16,7 +16,7 @@ import { Post, User } from "@/types/types";
 export async function createUserInFirebase(user: User) {
   const userRef = doc(db, "users", user.id);
   const userSnap = await getDoc(userRef);
-
+  console.log('called',user)
   if (!userSnap.exists()) {
     const userData = {
       name: user?.name,
