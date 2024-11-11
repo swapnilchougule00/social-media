@@ -22,8 +22,8 @@ export default function RootLayout({
         <body>
           <SignedIn>
             <AuthRedirect />
-            <UserSetupWrapper />
             <Header />
+            <UserSetupWrapper />
           </SignedIn>
           {children}
           <Toaster />
