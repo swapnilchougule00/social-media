@@ -67,10 +67,16 @@ export async function createPostInFirebase(
     });
   }
   const postSnapshots = await getDocs(postsCollection);
-  const posts: Post[] = postSnapshots.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  })) as Post[];
+
+  const posts = postSnapshots.docs.map((doc) => {
+    const data = doc.data();
+    return {
+      id: doc.id,
+      ...data,
+      createdAt: data.createdAt?.toDate() || new Date(), 
+    } as Post;
+  });
+
   return posts;
 }
 

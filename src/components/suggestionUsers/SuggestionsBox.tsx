@@ -14,10 +14,10 @@ const SuggestionsBox = () => {
     };
     getUsers();
   }, []);
-
+  const followingUsers = userData ? [...userData.following, userData?.id] : [];
   const usersNotFollowed = useMemo(() => {
     if (!userData?.name) return [];
-    return users.filter((user) => !userData.following.includes(user.id));
+    return users.filter((user) => !followingUsers.includes(user.id));
   }, [users, userData]);
 
   return (

@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Heart, MessageCircle, Repeat2, Share } from "lucide-react";
 import { Post as PostType } from "@/types/types";
+import { formatDistanceToNow } from "date-fns";
 
 interface PostProps {
   post: PostType;
@@ -29,7 +30,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
               {post.userName}
             </p>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {post.createdAt.toLocaleString()}
+              {formatDistanceToNow(post.createdAt, {
+                addSuffix: true,
+              })}
             </p>
           </div>
         </div>

@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 
 import useAppStore from "@/store/useAppStore";
-import { Loader2, Paperclip, X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { createPostInFirebase } from "@/utils/firebaseUtils";
 import { User, Post } from "@/types/types";
@@ -167,7 +167,7 @@ const AddNewPost: React.FC = () => {
             </div>
           )}
           <div className="flex items-center gap-4">
-            <Button
+            {/* <Button
               type="button"
               variant="outline"
               size="icon"
@@ -176,7 +176,7 @@ const AddNewPost: React.FC = () => {
               disabled={isPosting}
             >
               <Paperclip className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <input
               type="file"
               accept="image/*"

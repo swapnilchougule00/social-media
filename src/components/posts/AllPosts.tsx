@@ -14,13 +14,15 @@ const AllPosts: React.FC = () => {
       setPosts(allPosts);
     };
     getPosts();
-  }, [fetchPosts, setPosts]); 
+  }, [fetchPosts, setPosts]);
 
   const followedUsersPosts = useMemo(() => {
     if (!userData?.name) return [];
-    return posts.filter((post) =>
-      [...userData.following, userData.id].includes(post.userId)
-    );
+    return posts
+      .filter((post) =>
+        [...userData.following, userData.id].includes(post.userId)
+      )
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }, [posts, userData]);
 
   return (
