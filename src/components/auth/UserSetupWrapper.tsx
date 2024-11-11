@@ -4,6 +4,7 @@ import { User } from "@/types/types";
 
 const UserSetupWrapper = async () => {
   const user = await currentUser();
+  console.log(user);
   const userData: User = user! && {
     name: user.fullName || "",
     id: user.id,
