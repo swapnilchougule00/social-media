@@ -54,6 +54,12 @@ const UserCard = () => {
               </p>
               <p className="text-gray-500 dark:text-gray-400">Posts</p>
             </div>
+            <div className="text-center">
+              <p className="font-semibold text-gray-900 dark:text-gray-100">
+                {userData.mentioned.length}
+              </p>
+              <p className="text-gray-500 dark:text-gray-400">Mentions</p>
+            </div>
           </div>
         </CardContent>
       </Card>
